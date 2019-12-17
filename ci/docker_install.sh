@@ -11,7 +11,7 @@ apt-get install git -yqq zlib1g-dev
 
 # Install mysql driver
 # Here you can install any other extension that you need
-docker-php-ext-install pdo_mysql zip pdo_sqlite
+docker-php-ext-install pdo_mysql zip
 
 # Install composer
 curl -sS https://getcomposer.org/installer | php
