@@ -1,0 +1,22 @@
+# Select image from https://hub.docker.com/r/_/php/
+image: php:7.2
+
+variables:
+  COMPOSER_ALLOW_SUPERUSER: 1
+
+unit_test:
+  stage: test
+  script:
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+    - cp .env.example .env
+    - php artisan key:generate
+    - php artisan migrate:refresh
+    - php vendor/bin/phpunit
+
+#test:
+#  stage: test
+#  script: echo "Running tests"
+
+#build:
+#  stage: build
+#  script: echo "Building the app"
