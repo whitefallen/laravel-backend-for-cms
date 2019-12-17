@@ -13,7 +13,6 @@ unit_test:
   script:
     - cp .env.example .env
     - php artisan key:generate
-    - php artisan migrate:refresh
     - php vendor/bin/phpunit
 
 #test:
