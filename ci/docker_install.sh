@@ -7,7 +7,7 @@ set -xe
 
 # Install git (the php image doesn't have it) which is required by composer
 apt-get update -yqq
-apt-get install git -yqq zlib1g-dev
+apt-get install git -yqq zlib1g-dev libzip-dev
 
 # Install Xdebug
 pecl install xdebug
