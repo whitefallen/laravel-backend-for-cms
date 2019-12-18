@@ -17,11 +17,11 @@ class CreateTagTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
-            $table->integer('created_by');
-            $table->integer('changed_by');
+            $table->integer('created_by')->nullable();
+            $table->integer('changed_by')->nullable();
             $table->timestamps();
-            $table->foreign('created_by')->references('id')->on('user');
-            $table->foreign('changed_by')->references('id')->on('user');
+            $table->foreign('created_by')->references('id')->on('user')->onDelete('SET NULL');
+            $table->foreign('changed_by')->references('id')->on('user')->onDelete('SET NULL');
         });
     }
 
