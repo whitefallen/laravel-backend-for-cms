@@ -1,5 +1,5 @@
 # Select image from https://hub.docker.com/r/_/php/
-image: php:7.2
+image: php:7.3
 
 variables:
   COMPOSER_ALLOW_SUPERUSER: 1
