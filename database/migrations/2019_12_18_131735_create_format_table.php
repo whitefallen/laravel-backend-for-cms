@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePostTable extends Migration
+class CreateFormatTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,15 @@ class CreatePostTable extends Migration
      */
     public function up()
     {
-        Schema::create('post', function (Blueprint $table) {
+        Schema::create('format', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->json('topic');
-            $table->json('tags');
-            $table->integer('format');
-            $table->boolean('published');
-            $table->date('publish-date');
-            $table->text('introduction');
-            $table->text('content');
-            $table->string('image');
+            $table->string('name');
+            $table->string('description');
             $table->integer('created_by');
             $table->integer('changed_by');
             $table->timestamps();
             $table->foreign('created_by')->references('id')->on('user');
             $table->foreign('changed_by')->references('id')->on('user');
-            $table->foreign('format')->references('id')->on('format');
         });
     }
 
@@ -40,6 +32,6 @@ class CreatePostTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post');
+        Schema::dropIfExists('format');
     }
 }

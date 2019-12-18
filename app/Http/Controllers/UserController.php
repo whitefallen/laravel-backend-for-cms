@@ -8,8 +8,14 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function insertUser(){
-        //TODO code body
+    public function insertUser(Request $request){
+        User::create(array(
+            'name' => $request['username'],
+            'email' => $request['email'],
+            'password' => $request['password']
+        ));
+
+        return response(array('info'=>1));
     }
 
     public function getAllUser(){

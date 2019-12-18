@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Format;
+use App\Models\Tag;
+use App\Models\Topic;
 use App\Post;
 use App\User;
 use Illuminate\Database\Seeder;
@@ -10,9 +13,11 @@ class CMSSeeder extends Seeder
     public function run(){
         //clear Database
         DB::table('post')->delete();
+        DB::table('topic')->delete();
+        DB::table('tag')->delete();
+        DB::table('format')->delete();
         DB::table('user')->delete();
 
-        //standart user erstellen
         $daniel = User::create(array(
             'name' => 'Dany',
             'email' => 'Dany@thomy.de',
@@ -33,10 +38,69 @@ class CMSSeeder extends Seeder
 
         $this->command->info('Users are ready');
 
+        $switch = Topic::create(array(
+            'name' => 'Nintendo Switch',
+            'description' => 'Nintendo newest Console',
+            'image' => 'some cool image',
+            'created_by' => $daniel->id,
+            'changed_by' => $jonas->id
+        ));
+
+        $pc = Topic::create(array(
+            'name' => 'PC',
+            'description' => 'Elite Gaming',
+            'image' => 'some cool image',
+            'created_by' => $thomas->id,
+            'changed_by' => $thomas->id
+        ));
+
+        $ps4 = Topic::create(array(
+            'name' => 'PS4',
+            'description' => 'Exclusive Game Home',
+            'image' => 'some cool image',
+            'created_by' => $jonas->id,
+            'changed_by' => $daniel->id
+        ));
+
+        $this->command->info('Topics are ready');
+
+        $review = Format::create(array(
+            'name' => 'Review',
+            'description' => 'Written Opinion',
+            'created_by' => $jonas->id,
+            'changed_by' => $daniel->id
+        ));
+
+        $podcast = Format::create(array(
+            'name' => 'Podcast',
+            'description' => 'Daniel und Jonas bashen sich',
+            'created_by' => $jonas->id,
+            'changed_by' => $daniel->id
+        ));
+
+        $this->command->info('Formats are ready');
+
+        $godofwar = Tag::create(array(
+            'name' => 'godofwar',
+            'description' => 'God of War',
+            'created_by' => $jonas->id,
+            'changed_by' => $daniel->id
+        ));
+
+        $bloodstained = Tag::create(array(
+            'name' => 'bloodstained',
+            'description' => 'Bloodstained Game',
+            'created_by' => $jonas->id,
+            'changed_by' => $jonas->id
+        ));
+
+        $this->command->info('Tags are ready');
+
         Post::create(array(
             'title' => 'post1',
-            'topic' => [3,4,5],
-            'tags' => [1,2,3],
+            'topic' => [$ps4->id,$switch->id,$pc->id],
+            'tags' => [$bloodstained->id, $godofwar->id],
+            'format' => $review->id,
             'published' => true,
             'publish-date' => time(),
             'introduction' => 'dank meme incoming',
@@ -48,8 +112,9 @@ class CMSSeeder extends Seeder
 
         Post::create(array(
             'title' => 'post2',
-            'topic' => '[3,4,5]',
-            'tags' => '[1,2,3]',
+            'topic' => [$ps4->id,$switch->id,$pc->id],
+            'tags' => [$bloodstained->id],
+            'format' => $podcast->id,
             'published' => true,
             'publish-date' => time(),
             'introduction' => 'dank meme incoming',

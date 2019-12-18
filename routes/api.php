@@ -18,6 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('createUser', 'UserController@insertUser');
-Route::get('getUsers', 'UserController@getAllUser');
-Route::get('getPosts', 'PostController@getAllPost');
+Route::post('users', 'UserController@insertUser');
+Route::get('users', 'UserController@getAllUser');
+Route::get('posts', 'PostController@getAllPost');
