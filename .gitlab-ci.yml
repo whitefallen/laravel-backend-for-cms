@@ -27,3 +27,4 @@ codestyle:
   script:
     - phpcs --extensions=php app
   dependencies: []
+  allow_failure: true # ok if its fails 
