@@ -18,10 +18,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('users', 'UserController@insertUser');
+Route::post('users', 'UserController@createUser');
 Route::get('users', 'UserController@getAllUser');
 Route::get('getUser/{id}', 'UserController@getUserbyId');
 Route::get('deleteUser/{id}','UserController@deleteUser');
 Route::post('editUser','UserController@editUser');
 
 Route::get('posts', 'PostController@getAllPost');
+Route::post('posts', 'PostController@createPost');
+Route::get('getPost/{id}','PostController@getPostById');

@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Mockery\Exception;
 
 
 class UserController extends Controller
 {
-    public function insertUser(Request $request){
+    public function createUser(Request $request){
         User::create(array(
-            'name' => $request['username'],
+            'name' => $request['name'],
             'email' => $request['email'],
             'password' => $request['password']
         ));
@@ -19,23 +21,26 @@ class UserController extends Controller
     }
 
     public function deleteUser(int $id){
-        $user = User::find($id);
-        if(!($user == null)){
+        try{
+            $user = User::findOrFail($id);
             $user->delete();
             return response(array('info' => 1));
-        }else{
+        }catch(ModelNotFoundException $e){
             return response(array('info' => 0, 'message' => 'No User found with provided ID'));
+        }catch(Exception $e){
+            return response(array('info' => 0, 'message'=>$e));
         }
     }
 
     public function getUserById(int $id){
-        $user = User::find($id);
-        if($user != null){
+        try{
+            $user = User::findOrFail($id);
             return response(array('info' => 1, 'User' => $user));
-        }else{
+        }catch(ModelNotFoundException $e){
             return response(array('info' => 0, 'message' => 'No User found with provided ID'));
+        }catch(Exception $e){
+            return response(array('info' => 0, 'message'=>$e));
         }
-
     }
 
     public function getAllUser(){
@@ -43,7 +48,7 @@ class UserController extends Controller
     }
 
     public function editUser(Request $request){
-        if(User::find($request['id']) != null){
+        try{
             User::where('id',$request['id'])
                 ->update([
                     'name' => $request['name'],
@@ -51,8 +56,10 @@ class UserController extends Controller
                     'password' => $request['password']
                 ]);
             return response(array('info'=>1));
-        }else{
+        }catch(ModelNotFoundException $e){
             return response(array('info' => 0,'message' => 'No User found'));
+        }catch(Exception $e){
+            return response(array('info' => 0,'message' => $e));
         }
     }
 }

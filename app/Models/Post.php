@@ -14,5 +14,5 @@ class Post extends Model
     ];
 
 
-    protected $fillable = ['title','topic','tags','published','publish-date','introduction','content','image','created_by','changed_by'];
+    protected $fillable = ['title','topic','tags','format','published','publish-date','introduction','content','image','created_by','changed_by'];
 }
