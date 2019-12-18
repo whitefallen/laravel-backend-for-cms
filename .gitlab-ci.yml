@@ -15,12 +15,16 @@ unit_test:
     - cp .env.example .env
     - php artisan key:generate
     - php artisan migrate:refresh --seed
-    - php vendor/bin/phpunit --coverage-text --colors=never 
+    - php vendor/bin/phpunit --coverage-text --colors=never
+  artifacts:
+    paths:
+      - ./storage/logs # for debugging
+    expire_in: 1 days
+    when: on_failure
 
-#test:
-#  stage: test
-#  script: echo "Running tests"
-
-#build:
-#  stage: build
-#  script: echo "Building the app"
+codestyle:
+  stage: test
+  image: lorisleiva/laravel-docker
+  script:
+    - phpcs --extensions=php app
+  dependencies: []
