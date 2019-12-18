@@ -37,7 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['daily', 'sentry'],
             'ignore_exceptions' => false,
         ],
 
@@ -94,6 +94,12 @@ return [
         'null' => [
             'driver' => 'monolog',
             'handler' => NullHandler::class,
+        ],
+
+        'sentry' => [
+            'driver' => 'sentry',
+            'level'  => 'debug',
+            'bubble' => true,
         ],
     ],
 

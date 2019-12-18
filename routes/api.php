@@ -27,3 +27,4 @@ Route::post('editUser','UserController@editUser');
 Route::get('posts', 'PostController@getAllPost');
 Route::post('posts', 'PostController@createPost');
 Route::get('getPost/{id}','PostController@getPostById');
+
