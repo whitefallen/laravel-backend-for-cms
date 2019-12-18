@@ -4,12 +4,11 @@ image: php:7.2
 variables:
   COMPOSER_ALLOW_SUPERUSER: 1
 
-before_script:
-  # Install dependencies
-  - bash ci/docker_install.sh > /dev/null
-
 unit_test:
   stage: test
+  before_script:
+    # Install dependencies
+    - bash ci/docker_install.sh > /dev/null
   script:
     - touch database/database.sqlite
     - cp .env.example .env
