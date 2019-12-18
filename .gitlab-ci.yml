@@ -14,7 +14,8 @@ unit_test:
     - touch database/database.sqlite
     - cp .env.example .env
     - php artisan key:generate
-    - php vendor/bin/phpunit
+    - php artisan migrate:refresh --seed
+    - php vendor/bin/phpunit --log-junit report.xml
 
 #test:
 #  stage: test
