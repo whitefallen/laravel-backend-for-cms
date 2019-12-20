@@ -20,11 +20,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('users', 'UserController@createUser');
 Route::get('users', 'UserController@getAllUser');
-Route::get('getUser/{id}', 'UserController@getUserbyId');
-Route::get('deleteUser/{id}','UserController@deleteUser');
-Route::post('editUser','UserController@editUser');
+Route::get('users/{id}', 'UserController@getUserbyId');
+Route::delete('users/{id}','UserController@deleteUser');
+Route::post('users/{id}','UserController@editUser');
 
-Route::get('posts', 'PostController@getAllPost');
 Route::post('posts', 'PostController@createPost');
-Route::get('getPost/{id}','PostController@getPostById');
+Route::get('posts', 'PostController@getAllPost');
+Route::get('posts/{id}','PostController@getPostById');
+Route::delete('posts/{id}','PostController@deletePost');
+Route::post('posts/{id}','PostController@editPost');
 

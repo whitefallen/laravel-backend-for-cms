@@ -41,9 +41,9 @@ class PostController extends Controller
         }
     }
 
-    public function editPost(Request $request){
+    public function editPost(Request $request, int $id){
         try{
-            Post::where('id',$request['id'])
+            Post::where('id',$id)
                 ->update([
                     'title' => $request['title'],
                     'topic' => $request['topic'],
@@ -62,6 +62,18 @@ class PostController extends Controller
             return response(array('info' => 0,'message' => 'No User found'));
         }catch(Exception $e){
             return response(array('info' => 0,'message' => $e));
+        }
+    }
+
+    public function deletePost(int $id){
+        try{
+            $post = Post::findOrFail($id);
+            $post->delete();
+            return response(array('info' => 1));
+        }catch(ModelNotFoundException $e){
+            return response(array('info' => 0, 'message' => 'No Post found with provided ID'));
+        }catch(Exception $e){
+            return response(array('info' => 0, 'message'=>$e));
         }
     }
 }

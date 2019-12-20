@@ -47,9 +47,9 @@ class UserController extends Controller
         return response(array('info' => 1, 'Users' => User::all()));
     }
 
-    public function editUser(Request $request){
+    public function editUser(Request $request, int $id){
         try{
-            User::where('id',$request['id'])
+            User::where('id',$id)
                 ->update([
                     'name' => $request['name'],
                     'email' => $request['email'],
