@@ -30,3 +30,21 @@ Route::get('posts/{id}','PostController@getPostById');
 Route::delete('posts/{id}','PostController@deletePost');
 Route::post('posts/{id}','PostController@editPost');
 
+Route::post('formats', 'FormatController@createFormat');
+Route::get('formats', 'FormatController@getAllFormat');
+Route::get('formats/{id}','FormatController@getFormatById');
+Route::delete('formats/{id}','FormatController@deleteFormat');
+Route::post('formats/{id}','FormatController@editFormat');
+
+Route::post('topics', 'TopicController@createTopic');
+Route::get('topics', 'TopicController@getAllTopic');
+Route::get('topics/{id}','TopicController@getTopicById');
+Route::delete('topics/{id}','TopicController@deleteTopic');
+Route::post('topics/{id}','TopicController@editTopic');
+
+Route::post('tags', 'TagController@createTag');
+Route::get('tags', 'TagController@getAllTag');
+Route::get('tags/{id}','TagController@getTagById');
+Route::delete('tags/{id}','TagController@deleteTag');
+Route::post('tags/{id}','TagController@editTag');
+
