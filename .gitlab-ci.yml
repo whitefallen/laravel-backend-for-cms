@@ -14,10 +14,10 @@ unit_test:
     - cp .env.example .env
     - php artisan key:generate
     - php artisan migrate:refresh --seed
-    - php vendor/bin/phpunit --coverage-text=phpunit_report --colors=never
+    - php vendor/bin/phpunit --coverage-text=phpunit_report.txt --colors=never
   artifacts:
     paths:
-      - . # for debugging
+      - ./storage # for debugging
     expire_in: 1 days
 
 codestyle:
