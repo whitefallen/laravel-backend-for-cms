@@ -27,3 +27,8 @@ codestyle:
     - phpcs --extensions=php --report=full --report-file=storage/reports/phpcs.log app
   dependencies: []
   allow_failure: true # ok if its fails 
+  artifacts:
+    paths:
+      - ./storage # for debugging
+    expire_in: 1 days
+
