@@ -32,4 +32,5 @@ codestyle:
     paths:
       - ./storage # for debugging
     expire_in: 1 days
+    when: always
 
