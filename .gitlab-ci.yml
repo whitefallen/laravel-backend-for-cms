@@ -14,7 +14,7 @@ unit_test:
     - cp .env.example .env
     - php artisan key:generate
     - php artisan migrate:refresh --seed
-    - php vendor/bin/phpunit --coverage-text=storage/phpunit_report.txt --colors=never
+    - php vendor/bin/phpunit --coverage-text=storage/reports/phpunit_report.txt --colors=never
   artifacts:
     paths:
       - ./storage # for debugging
