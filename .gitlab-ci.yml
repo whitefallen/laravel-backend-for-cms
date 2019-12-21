@@ -22,6 +22,9 @@ unit_test:
 
 codestyle:
   stage: test
+  before_script:
+    # Install dependencies
+    - bash ci/docker_install.sh > /dev/null
   script:
     - php vendor/bin/phpcs --extensions=php --report=summary --report-file=storage/reports/phpcs.log app
   allow_failure: true # ok if its fails 
