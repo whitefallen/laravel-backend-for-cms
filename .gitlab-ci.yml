@@ -24,6 +24,6 @@ codestyle:
   stage: test
   image: lorisleiva/laravel-docker
   script:
-    - phpcs --extensions=php app
+    - phpcs --extensions=php --report=full --report-file=storage/reports/phpcs.log app
   dependencies: []
   allow_failure: true # ok if its fails 
