@@ -1,6 +1,10 @@
 # Select image from https://hub.docker.com/r/_/php/
 image: php:7.3
 
+stages:
+  - test_stage
+  - code_analyse_stage
+
 variables:
   COMPOSER_ALLOW_SUPERUSER: 1
 
@@ -22,7 +26,7 @@ unit_test:
     expire_in: 1 days
 
 codestyle:
-  stage: test
+  stage: code_analyse_stage
   script:
     - php vendor/bin/phpcs --extensions=php --report=full --report-file=storage/reports/phpcs.log app
   allow_failure: true # ok if its fails 
