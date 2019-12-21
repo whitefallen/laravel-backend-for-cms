@@ -23,7 +23,7 @@ unit_test:
 codestyle:
   stage: test
   script:
-    - phpcs --extensions=php --report=summary --report-file=storage/reports/phpcs.log app
+    - php vendor/bin/phpcs --extensions=php --report=summary --report-file=storage/reports/phpcs.log app
   allow_failure: true # ok if its fails 
   artifacts:
     paths:
