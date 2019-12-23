@@ -13,7 +13,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
         "laravel/tinker": "^2.0",
-        "sentry/sentry-laravel": "^1.5",
+        "sentry/sentry-laravel": "1.5.0",
         "squizlabs/php_codesniffer": "*"
     },
     "require-dev": {
@@ -31,7 +31,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": ["sentry/sentry-laravel"]
         }
     },
     "autoload": {
