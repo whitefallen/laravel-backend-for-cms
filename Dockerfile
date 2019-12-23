@@ -16,7 +16,7 @@ RUN docker-php-ext-enable xdebug
 
 # Install needed extensions
 # Here you can install any other extension that you need during the test and deployment process
-RUN docker-php-ext-install mcrypt pdo_mysql zip
+RUN docker-php-ext-install pdo_mysql zip
 
 # Install Composer
 RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
