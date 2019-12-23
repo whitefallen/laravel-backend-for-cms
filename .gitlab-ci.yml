@@ -8,6 +8,7 @@ unit_test:
   stage: test
   script:
     - composer install
+    - touch database/database.sqlite
     - cp .env.example .env
     - php artisan key:generate
     - php artisan migrate
