@@ -1,0 +1,31 @@
+image: registry.gitlab.com/der-eine-aegyptische-gott/laravel-backend-for-cms:latest
+
+stages:
+  - test
+  - deploy
+
+unit_test:
+  stage: test
+  script:
+    - composer install
+    - cp .env.example .env
+    - php artisan key:generate
+    - php artisan migrate
+    - vendor/bin/phpunit
+
+deploy_production:
+  stage: deploy
+  script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+    - ~/.composer/vendor/bin/envoy run deploy
+  environment:
+    name: production
+    url: http://laravelcms.whitefallen.de
+  when: manual
+  only:
+    - master
