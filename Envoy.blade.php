@@ -23,7 +23,7 @@
     git reset --hard {{ $commit }}
     touch database/database.sqlite
     cd {{ $app_dir }}
-    chgrp -R www-data ./
+    chown -R www-data {{$app_dir}}
 @endtask
 
 @task('run_composer')
