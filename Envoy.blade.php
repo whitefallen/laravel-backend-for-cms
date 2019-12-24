@@ -22,6 +22,8 @@
     cd {{ $new_release_dir }}
     git reset --hard {{ $commit }}
     touch database/database.sqlite
+    chmod -R 775 database
+    chgrp -R www-data database
 @endtask
 
 @task('run_composer')
