@@ -28,6 +28,9 @@
     echo "Starting deployment ({{ $release }})"
     cd {{ $new_release_dir }}
     composer install --prefer-dist --no-scripts -q -o
+    cp .env.example .env
+    php artisan key:generate
+    php artisan migrate:refresh --seed
 @endtask
 
 @task('update_symlinks')
