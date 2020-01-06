@@ -7,6 +7,7 @@ use App\Post;
 use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class CMSSeeder extends Seeder
 {
@@ -21,19 +22,19 @@ class CMSSeeder extends Seeder
         $daniel = User::create(array(
             'name' => 'Dany',
             'email' => 'Dany@thomy.de',
-            'password' => 'Danyyy'
+            'password' => Hash::make('Danyyy')
         ));
 
         $thomas = User::create(array(
             'name' => 'Thomy',
             'email' => 'thomy@thomy.de',
-            'password' => 'thomyyy'
+            'password' => Hash::make('thomyyy')
         ));
 
         $jonas = User::create(array(
             'name' => 'Johnny',
-            'email' => 'Johny@thomy.de',
-            'password' => 'Johnyyyyy'
+            'email' => 'jonasbaur@hotmail.de',
+            'password' => Hash::make('test')
         ));
 
         $this->command->info('Users are ready');
