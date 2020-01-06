@@ -11,8 +11,15 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
+Route::get('/', function () {
+    if(File::exists(public_path().'/ui/index.html')) {
+        return File::get(public_path().'/ui/index.html');
+    } else {
+        return view('welcome');
+    }
+});
 
