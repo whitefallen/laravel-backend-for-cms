@@ -13,4 +13,12 @@ class Topic extends Model
     public function posts(){
         return $this->belongsToMany('Post');
     }
+
+    public function creator(){
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function editor() {
+        return $this->belongsTo(User::class, 'changed_by');
+    }
 }
