@@ -11,7 +11,7 @@ class Format extends Model
     protected $fillable = ['name','description','created_by','changed_by'];
 
     public function posts(){
-        return $this->hasMany(Post::class,'format');
+        return $this->hasMany(Post::class);
     }
 
     public function creator(){

@@ -97,13 +97,13 @@ class CMSSeeder extends Seeder
 
         $this->command->info('Tags are ready');
 
-        Post::create(array(
+        // 'topic' => [$ps4->id,$switch->id,$pc->id],
+        // 'tags' => [$bloodstained->id, $godofwar->id],
+        // 'format' => $review->id,
+        $post1 = Post::create(array(
             'title' => 'post1',
-            'topic' => [$ps4->id,$switch->id,$pc->id],
-            'tags' => [$bloodstained->id, $godofwar->id],
-            'format' => $review->id,
             'published' => true,
-            'publish-date' => time(),
+            'publish_date' => time(),
             'introduction' => 'dank meme incoming',
             'content' => 'some normie shit, because daniel',
             'image' => 'gay',
@@ -111,19 +111,46 @@ class CMSSeeder extends Seeder
             'changed_by' => $daniel->id
         ));
 
-        Post::create(array(
+        // 'topic' => [$ps4->id,$switch->id,$pc->id],
+        // 'tags' => [$bloodstained->id],
+        // 'format' => $podcast->id,
+        $post2 = Post::create(array(
             'title' => 'post2',
-            'topic' => [$ps4->id,$switch->id,$pc->id],
-            'tags' => [$bloodstained->id],
-            'format' => $podcast->id,
             'published' => true,
-            'publish-date' => time(),
+            'publish_date' => time(),
             'introduction' => 'dank meme incoming',
             'content' => 'some not normie shit, because jonas',
             'image' => 'gay',
             'created_by' => $jonas->id,
             'changed_by' => $jonas->id
         ));
+
+        //example of associate a post to a format
+        $post1->format()->associate($review);
+        $post1->save();
+
+        // example of saving post to a format
+        $podcast->posts()->save($post2);
+
+        // example of attaching tags to posts
+        $post1->tags()->attach($bloodstained);
+        $post1->tags()->attach($godofwar);
+
+        // example of attaching posts to tags
+        $bloodstained->posts()->attach($post2);
+
+        // example of attaching posts to topics
+        $ps4->posts()->attach($post1);
+        $ps4->posts()->attach($post2);
+
+        // example of attaching posts to topics
+        $pc->posts()->attach($post1);
+        $pc->posts()->attach($post2);
+
+        // example of attaching posts to topics
+        $switch->posts()->attach($post1);
+        $switch->posts()->attach($post2);
+
 
         $this->command->info('Posts are ready');
 

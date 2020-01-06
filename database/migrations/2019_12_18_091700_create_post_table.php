@@ -16,11 +16,11 @@ class CreatePostTable extends Migration
         Schema::create('post', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->json('topic');
-            $table->json('tags');
-            $table->integer('format')->nullable();
+            $table->json('topic')->nullable();
+            $table->json('tags')->nullable();
+            $table->integer('format_id')->nullable();
             $table->boolean('published');
-            $table->date('publish-date');
+            $table->date('publish_date');
             $table->text('introduction');
             $table->text('content');
             $table->string('image');
@@ -29,7 +29,7 @@ class CreatePostTable extends Migration
             $table->timestamps();
             $table->foreign('created_by')->references('id')->on('user')->onDelete('CASCADE');
             $table->foreign('changed_by')->references('id')->on('user')->onDelete('SET NULL');
-            $table->foreign('format')->references('id')->on('format')->onDelete('SET NULL');
+            $table->foreign('format_id')->references('id')->on('format')->onDelete('SET NULL');
         });
     }
 

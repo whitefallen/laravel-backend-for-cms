@@ -8,15 +8,10 @@ class Post extends Model
 {
     protected $table = 'post';
 
-    protected $casts = [
-        'topic' => 'array',
-        'tags' => 'array'
-    ];
-
-    protected $fillable = ['title','topic','tags','format','published','publish-date','introduction','content','image','created_by','changed_by'];
+    protected $fillable = ['title','published','publish-date','introduction','content','image','created_by','changed_by'];
 
     public function format(){
-        return $this->belongsTo(Format::class, 'format');
+        return $this->belongsTo(Format::class);
     }
 
     public function creator(){
@@ -28,10 +23,10 @@ class Post extends Model
     }
 
     public function topics(){
-        return $this->belongsToMany(Topic::class);
+        return $this->belongsToMany(Topic::class, 'topic_to_post');
     }
 
     public function tags(){
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class, 'tag_to_post');
     }
 }
