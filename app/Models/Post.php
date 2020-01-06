@@ -15,8 +15,12 @@ class Post extends Model
 
     protected $fillable = ['title','topic','tags','format','published','publish-date','introduction','content','image','created_by','changed_by'];
 
-    public function formats(){
+    public function format(){
         return $this->belongsTo('Format');
+    }
+
+    public function user(){
+        return $this->belongsTo('User');
     }
 
     public function topics(){

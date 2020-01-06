@@ -11,6 +11,6 @@ class Format extends Model
     protected $fillable = ['name','description','created_by','changed_by'];
 
     public function posts(){
-        return $this->hasMany('Post');
+        return $this->hasMany('App\Post','format');
     }
 }

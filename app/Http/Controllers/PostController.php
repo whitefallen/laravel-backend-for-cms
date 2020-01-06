@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Mockery\Exception;
@@ -75,5 +76,10 @@ class PostController extends Controller
         }catch(Exception $e){
             return response(array('info' => 0, 'message'=>$e));
         }
+    }
+
+    public function getPostsFromUser(int $id){
+        $posts = User::find($id)->posts;
+        return response(array('info'=>1,'post'=>$posts));
     }
 }
