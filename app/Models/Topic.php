@@ -9,4 +9,8 @@ class Topic extends Model
     protected $table = 'topic';
 
     protected $fillable = ['name','description','image','created_by','changed_by'];
+
+    public function posts(){
+        return $this->belongsToMany('Post');
+    }
 }

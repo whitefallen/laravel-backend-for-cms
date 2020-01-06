@@ -9,4 +9,8 @@ class Tag extends Model
     protected $table = 'tag';
 
     protected $fillable = ['name','description','created_by','changed_by'];
+
+    public function posts(){
+        return $this->belongsToMany('Post');
+    }
 }

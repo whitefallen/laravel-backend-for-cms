@@ -16,15 +16,7 @@ class User extends Authenticatable implements JWTSubject
 
 
     public function posts(){
-        return $this->hasMany('post');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getRememberToken()
-    {
-        // TODO: Implement getRememberToken() method.
+        return $this->hasMany('Post');
     }
 
     /**

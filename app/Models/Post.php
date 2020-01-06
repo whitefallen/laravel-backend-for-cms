@@ -13,6 +13,17 @@ class Post extends Model
         'tags' => 'array'
     ];
 
-
     protected $fillable = ['title','topic','tags','format','published','publish-date','introduction','content','image','created_by','changed_by'];
+
+    public function formats(){
+        return $this->belongsTo('Format');
+    }
+
+    public function topics(){
+        return $this->belongsToMany('Topic');
+    }
+
+    public function tags(){
+        return $this->belongsToMany('Tag');
+    }
 }
