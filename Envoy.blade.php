@@ -32,6 +32,9 @@
     composer install --prefer-dist --no-scripts -q -o
     cp .env.example .env
     php artisan key:generate
+    php artisan jwt:secret
+    php artisan config:clear
+    php artisan config:cache
     php artisan migrate:refresh --seed
 @endtask
 
