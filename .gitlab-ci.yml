@@ -25,6 +25,7 @@ unit_test:
 codestyle:
   stage: static-analysis
   script:
+    - composer install
     - php vendor/bin/phpcs --standard=psr2 --extensions=php --report=full --report-file=storage/reports/phpcs.log app
   allow_failure: true # ok if its fails
   artifacts:
