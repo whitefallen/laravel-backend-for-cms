@@ -88,7 +88,7 @@ class UserController extends Controller
         }
 
         // all good so return the token
-        return response()->json(['info'=>1,'token' =>compact('token')]);
+        return response()->json(['info'=>1,'token' => $token]);
 
     }
 
