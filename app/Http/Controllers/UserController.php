@@ -74,7 +74,6 @@ class UserController extends Controller
     }
 
     public function login(Request $request){
-        header('Access-Control-Allow-Origin: *');
         // grab credentials from the request
         $credentials = $request->only('email', 'password');
 
