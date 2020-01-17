@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Events\SavedPost;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Mockery\Exception;
@@ -28,6 +29,11 @@ class PostController extends Controller
             'created_by'=>$request['created_by'],
             'changed_by'=>$request['changed_by']
         ));
+
+        // get new created post and send it to EventService
+        $post = Post::findOrFail($request['title']);
+        event(new SavedPost($post));
+
         return response(array('info'=>1));
     }
 
@@ -58,6 +64,11 @@ class PostController extends Controller
                     'created_by' => $request['created_by'],
                     'changed_by' => $request['changed_by']
                 ]);
+
+            // get new edited post and send it to EventService
+            $post = Post::findOrFail($id);
+            event(new SavedPost($post));
+
             return response(array('info'=>1));
         }catch(ModelNotFoundException $e){
             return response(array('info' => 0,'message' => 'No User found'));
