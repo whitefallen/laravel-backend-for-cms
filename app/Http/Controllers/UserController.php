@@ -80,11 +80,11 @@ class UserController extends Controller
         try {
             // attempt to verify the credentials and create a token for the user
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['info'=>0,'error' => 'invalid_credentials'], 401);
+                return response()->json(['info'=>0,'error' => 'invalid_credentials']);
             }
         } catch (JWTException $e) {
             // something went wrong whilst attempting to encode the token
-            return response()->json(['info'=>0,'error' => 'could_not_create_token'], 500);
+            return response()->json(['info'=>0,'error' => 'could_not_create_token']);
         }
 
         // all good so return the token
