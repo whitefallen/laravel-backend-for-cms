@@ -11,7 +11,7 @@ class Tag extends Model
     protected $fillable = ['name','description','created_by','changed_by'];
 
     public function posts(){
-        return $this->belongsToMany(Post::class, 'tag_to_post');
+        return $this->belongsToMany(Post::class, 'tag_to_post')->withTimestamps();
     }
 
     public function creator(){

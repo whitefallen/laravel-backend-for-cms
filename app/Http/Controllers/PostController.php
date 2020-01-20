@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Topic;
+use App\Models\Tag;
 use App\Models\User;
 use App\Events\SavedPost;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
 
 class PostController extends Controller
@@ -16,13 +19,11 @@ class PostController extends Controller
     }
 
     public function createPost(Request $request){
-        Post::create(array(
+        $post = Post::create(array(
             'title'=>$request['title'],
-            'topic'=>$request['topic'],
-            'tags'=>$request['tags'],
-            'format'=>$request['format'],
+            'format_id'=>$request['format_id'],
             'published'=>$request['published'],
-            'publish-date'=>$request['publish-date'],
+            'publish_date'=>$request['publish_date'],
             'introduction'=>$request['introduction'],
             'content'=>$request['content'],
             'image'=>$request['image'],
@@ -30,11 +31,30 @@ class PostController extends Controller
             'changed_by'=>$request['changed_by']
         ));
 
-        // get new created post and send it to EventService
-        $post = Post::findOrFail($request['title']);
-        event(new SavedPost($post));
+        /**
+         * Set dependencies
+         */
+        $tags = $request['tags'];
+        $topics = $request['topic'];
+        $format = $request['format_id'];
 
-        return response(array('info'=>1));
+        foreach ($tags as $tag) {
+            $post->tags()->sync(Tag::findOrFail($tag));
+        }
+        foreach ($topics as $topic) {
+            $post->topics()->sync(Topic::findOrFail($topic));
+        }
+        $post->format()->associate($format);
+
+        // Fire event to trigger webhooks
+        try {
+            event(new SavedPost($post));
+        } catch (\Exception $e) {
+            LOG::Warning('No API Server online');
+        }
+
+
+        return response(array('info'=>1, 'Post' => $post));
     }
 
     public function getPostById(int $id){
@@ -54,11 +74,9 @@ class PostController extends Controller
             Post::where('id',$id)
                 ->update([
                     'title' => $request['title'],
-                    'topic' => $request['topic'],
-                    'tags' => $request['tags'],
-                    'format' => $request['format'],
+                    'format_id' => $request['format_id'],
                     'published' => $request['published'],
-                    'publish-date' => $request['publish-date'],
+                    'publish_date' => $request['publish_date'],
                     'introduction' => $request['introduction'],
                     'content' => $request['content'],
                     'image' => $request['image'],

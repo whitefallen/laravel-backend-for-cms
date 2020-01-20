@@ -11,7 +11,7 @@ class Topic extends Model
     protected $fillable = ['name','description','image','created_by','changed_by'];
 
     public function posts(){
-        return $this->belongsToMany(Post::class, 'topic_to_post');
+        return $this->belongsToMany(Post::class, 'topic_to_post')->withTimestamps();
     }
 
     public function creator(){
