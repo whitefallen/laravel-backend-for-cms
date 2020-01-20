@@ -38,12 +38,8 @@ class PostController extends Controller
         $topics = $request['topic'];
         $format = $request['format_id'];
 
-        foreach ($tags as $tag) {
-            $post->tags()->sync(Tag::findOrFail($tag));
-        }
-        foreach ($topics as $topic) {
-            $post->topics()->sync(Topic::findOrFail($topic));
-        }
+        $post->tags()->sync($tags);
+        $post->topics()->sync($topics);
         $post->format()->associate($format);
 
         // Fire event to trigger webhooks
@@ -84,10 +80,23 @@ class PostController extends Controller
                     'changed_by' => $request['changed_by']
                 ]);
 
-            // get new edited post and send it to EventService
-            $post = Post::findOrFail($id);
-            event(new SavedPost($post));
+            $tags = $request['tags'];
+            $topics = $request['topic'];
+            $format = $request['format_id'];
 
+            $post = Post::findOrFail($id);
+
+            $post->tags()->sync($tags);
+            $post->topics()->sync($topics);
+            $post->format()->associate($format);
+
+            // Fire event to trigger webhooks
+            try {
+                event(new SavedPost($post));
+            } catch (\Exception $e) {
+                LOG::Warning('No API Server online');
+            }
+            
             return response(array('info'=>1));
         }catch(ModelNotFoundException $e){
             return response(array('info' => 0,'message' => 'No User found'));
