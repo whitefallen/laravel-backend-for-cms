@@ -40,7 +40,8 @@ class PostController extends Controller
     public function getPostById(int $id){
         try{
             $post = Post::findOrFail($id);
-            return response(array('info'=>1,'Post' => $post ));
+            $creator = $post->creator;
+            return response(array('info'=>1,'Post' => $post, 'Creator' => $creator));
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Post found with provided ID'));
         }catch(Exception $e){
