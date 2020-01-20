@@ -10,7 +10,7 @@ use Mockery\Exception;
 class FormatController extends Controller
 {
     public function getAllFormat(){
-        return response(array('info' => 1, 'Posts' => Format::all()));
+        return response(array('info' => 1, 'Formats' => Format::all()));
     }
 
     public function createFormat(Request $request){

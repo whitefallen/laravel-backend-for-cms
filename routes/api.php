@@ -45,6 +45,7 @@ Route::post('login','UserController@login');
 Route::post('users', 'UserController@createUser');
 Route::get('users', 'UserController@getAllUser');
 Route::get('users/{id}', 'UserController@getUserbyId');
+
 Route::get('posts', 'PostController@getAllPost');
 Route::get('posts/{id}','PostController@getPostById');
 Route::get('formats', 'FormatController@getAllFormat');
