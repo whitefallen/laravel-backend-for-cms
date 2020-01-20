@@ -43,7 +43,7 @@ class UserController extends Controller
     {
         try {
             $user = User::findOrFail($id);
-            return response(array('info' => 1, 'User' => $user));
+            return response(array('info' => 1, 'data' => $user));
         } catch (ModelNotFoundException $e) {
             return response(array('info' => 0, 'message' => 'No User found with provided ID'));
         } catch (Exception $e) {
@@ -53,7 +53,7 @@ class UserController extends Controller
 
     public function getAllUser()
     {
-        return response(array('info' => 1, 'Users' => User::all()));
+        return response(array('info' => 1, 'data' => User::all()));
     }
 
     public function editUser(Request $request, int $id)

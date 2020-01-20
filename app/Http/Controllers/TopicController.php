@@ -10,7 +10,7 @@ use Mockery\Exception;
 class TopicController extends Controller
 {
     public function getAllTopic(){
-        return response(array('info' => 1, 'Topics' => Topic::all()));
+        return response(array('info' => 1, 'data' => Topic::all()));
     }
 
     public function createTopic(Request $request){
@@ -27,7 +27,7 @@ class TopicController extends Controller
     public function getTopicById(int $id){
         try{
             $topic = Topic::findOrFail($id);
-            return response(array('info'=>1,'Topic' => $topic ));
+            return response(array('info'=>1,'data' => $topic ));
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Topic found with provided ID'));
         }catch(Exception $e){

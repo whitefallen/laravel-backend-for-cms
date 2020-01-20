@@ -15,7 +15,7 @@ use Mockery\Exception;
 class PostController extends Controller
 {
     public function getAllPost(){
-        return response(array('info' => 1, 'Posts' => Post::all()));
+        return response(array('info' => 1, 'data' => Post::all()));
     }
 
     public function createPost(Request $request){
@@ -57,7 +57,7 @@ class PostController extends Controller
         try{
             $post = Post::findOrFail($id);
             $creator = $post->creator;
-            return response(array('info'=>1,'Post' => $post, 'Creator' => $creator));
+            return response(array('info'=>1,'data' => $post, 'creator' => $creator));
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Post found with provided ID'));
         }catch(Exception $e){
@@ -96,7 +96,7 @@ class PostController extends Controller
             } catch (\Exception $e) {
                 LOG::Warning('No API Server online');
             }
-            
+
             return response(array('info'=>1));
         }catch(ModelNotFoundException $e){
             return response(array('info' => 0,'message' => 'No User found'));

@@ -10,7 +10,7 @@ use Mockery\Exception;
 class TagController extends Controller
 {
     public function getAllTag(){
-        return response(array('info' => 1, 'Tag' => Tag::all()));
+        return response(array('info' => 1, 'data' => Tag::all()));
     }
 
     public function createTag(Request $request){
@@ -26,7 +26,7 @@ class TagController extends Controller
     public function getTagById(int $id){
         try{
             $tag = Tag::findOrFail($id);
-            return response(array('info'=>1,'Tag' => $tag ));
+            return response(array('info'=>1,'data' => $tag ));
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Tag found with provided ID'));
         }catch(Exception $e){

@@ -10,7 +10,7 @@ use Mockery\Exception;
 class FormatController extends Controller
 {
     public function getAllFormat(){
-        return response(array('info' => 1, 'Formats' => Format::all()));
+        return response(array('info' => 1, 'data' => Format::all()));
     }
 
     public function createFormat(Request $request){
@@ -26,7 +26,7 @@ class FormatController extends Controller
     public function getFormatById(int $id){
         try{
             $format = Format::findOrFail($id);
-            return response(array('info'=>1,'Format' => $format ));
+            return response(array('info'=>1,'data' => $format ));
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Format found with provided ID'));
         }catch(Exception $e){
