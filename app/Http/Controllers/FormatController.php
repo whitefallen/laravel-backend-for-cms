@@ -26,6 +26,7 @@ class FormatController extends Controller
     public function getFormatById(int $id){
         try{
             $format = Format::findOrFail($id);
+            $format->creator;
             return response(array('info'=>1,'data' => $format ));
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Format found with provided ID'));
