@@ -57,6 +57,9 @@ class PostController extends Controller
         try{
             $post = Post::findOrFail($id);
             $post->creator;
+            $post->tags;
+            $post->topics;
+            $post->format;
             return response(array('info'=>1,'data' => $post));
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Post found with provided ID'));
