@@ -56,8 +56,8 @@ class PostController extends Controller
     public function getPostById(int $id){
         try{
             $post = Post::findOrFail($id);
-            $creator = $post->creator;
-            return response(array('info'=>1,'data' => $post, 'creator' => $creator));
+            $post->creator;
+            return response(array('info'=>1,'data' => $post));
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Post found with provided ID'));
         }catch(Exception $e){
@@ -90,7 +90,7 @@ class PostController extends Controller
             $post->topics()->sync($topics);
             $post->format()->associate($format);
             $post->save();
-            
+
             // Fire event to trigger webhooks
             try {
                 event(new SavedPost($post));
@@ -98,7 +98,7 @@ class PostController extends Controller
                 LOG::Warning('No API Server online');
             }
 
-            return response(array('info'=>1));
+            return response(array('info'=>1, 'data'=> $post));
         }catch(ModelNotFoundException $e){
             return response(array('info' => 0,'message' => 'No User found'));
         }catch(Exception $e){
@@ -112,7 +112,7 @@ class PostController extends Controller
             $post->tags()->detach();
             $post->topics()->detach();
             $post->delete();
-            return response(array('info' => 1));
+            return response(array('info' => 1, 'message' => 'Post successfully deleted'));
         }catch(ModelNotFoundException $e){
             return response(array('info' => 0, 'message' => 'No Post found with provided ID'));
         }catch(Exception $e){
