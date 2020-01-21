@@ -21,7 +21,6 @@ class PostController extends Controller
     public function createPost(Request $request){
         $post = Post::create(array(
             'title'=>$request['title'],
-            'format_id'=>$request['format_id'],
             'published'=>$request['published'],
             'publish_date'=>$request['publish_date'],
             'introduction'=>$request['introduction'],
@@ -41,6 +40,7 @@ class PostController extends Controller
         $post->tags()->sync($tags);
         $post->topics()->sync($topics);
         $post->format()->associate($format);
+        $post->save();
 
         // Fire event to trigger webhooks
         try {
@@ -89,7 +89,8 @@ class PostController extends Controller
             $post->tags()->sync($tags);
             $post->topics()->sync($topics);
             $post->format()->associate($format);
-
+            $post->save();
+            
             // Fire event to trigger webhooks
             try {
                 event(new SavedPost($post));
