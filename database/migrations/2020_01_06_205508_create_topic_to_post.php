@@ -18,6 +18,8 @@ class CreateTopicToPost extends Migration
             $table->integer('topic_id')->unsigned();
             $table->integer('post_id')->unsigned();
             $table->timestamps();
+            $table->foreign('post_id')->references('id')->on('post');
+            $table->foreign('topic_id')->references('id')->on('topic');
         });
     }
 

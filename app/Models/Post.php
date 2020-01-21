@@ -23,10 +23,11 @@ class Post extends Model
     }
 
     public function topics(){
-        return $this->belongsToMany(Topic::class, 'topic_to_post')->withTimestamps();
+        return $this->belongsToMany(Topic::class, 'topic_to_post', 'post_id', 'topic_id')->withTimestamps();
     }
 
     public function tags(){
-        return $this->belongsToMany(Tag::class, 'tag_to_post')->withTimestamps();
+        return $this->belongsToMany(Tag::class, 'tag_to_post', 'post_id', 'tag_id')->withTimestamps();
     }
+
 }

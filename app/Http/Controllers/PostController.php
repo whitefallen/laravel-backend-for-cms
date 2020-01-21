@@ -108,6 +108,8 @@ class PostController extends Controller
     public function deletePost(int $id){
         try{
             $post = Post::findOrFail($id);
+            $post->tags()->detach();
+            $post->topics()->detach();
             $post->delete();
             return response(array('info' => 1));
         }catch(ModelNotFoundException $e){
@@ -121,4 +123,5 @@ class PostController extends Controller
         $posts = User::find($id)->posts;
         return response(array('info'=>1,'post'=>$posts));
     }
+
 }
