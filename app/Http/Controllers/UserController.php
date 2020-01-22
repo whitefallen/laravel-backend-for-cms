@@ -89,7 +89,7 @@ class UserController extends Controller
 
         // all good so return the token
         $currentUser = JWTAuth::user();
-        return response()->json(['info'=>1,'token' => $token,'currentuser' => $currentUser]);
+        return response()->json(['info'=>1,'token' => $token,'currentUser' => $currentUser]);
 
     }
 
