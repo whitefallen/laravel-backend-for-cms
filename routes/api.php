@@ -56,6 +56,8 @@ Route::get('tags', 'TagController@getAllTag');
 Route::get('tags/{id}','TagController@getTagById');
 Route::get('userposts/{id}','PostController@getPostsFromUser');
 
-Route::get('webhook', 'WebhookController@handle');
+Route::get('webhookHandle', 'WebhookController@handle');
 Route::get('webhookDebug', 'WebhookController@webhookAction');
+Route::post('webhook', 'WebhookController@createWebhook');
+Route::get('webhook', 'WebhookController@getAllWebhooks');
 
