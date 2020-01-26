@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\SavedPost;
+use App\Models\Webhook;
 use GuzzleHttp\Client;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -29,7 +30,16 @@ class SendPostEvent
     public function handle(SavedPost $event): void
     {
         $client = new Client();
-        $res = $client->get('http://localhost:8001/api/webhook');
+        $webhooks = Webhook::findOrFail('posts');
+        if($webhooks) {
+            foreach($webhooks as $key=>$webhook) {
+                $client->post(
+                    $webhook->url, [
+                        'body' => $event->post
+                    ]
+                );
+            }
+        }
         $post = $event->post;
         LOG::critical('sending post data', ['data' => $post->toArray()]);
     }
