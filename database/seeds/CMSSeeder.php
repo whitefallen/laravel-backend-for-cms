@@ -42,7 +42,7 @@ class CMSSeeder extends Seeder
         $switch = Topic::create(array(
             'name' => 'Nintendo Switch',
             'description' => 'Nintendo newest Console',
-            'image' => 'some cool image',
+            'image' => 'storage/topicImages/switch.jpg',
             'created_by' => $daniel->id,
             'changed_by' => $jonas->id
         ));
@@ -50,7 +50,7 @@ class CMSSeeder extends Seeder
         $pc = Topic::create(array(
             'name' => 'PC',
             'description' => 'Elite Gaming',
-            'image' => 'some cool image',
+            'image' => 'storage/topicImages/pc.png',
             'created_by' => $thomas->id,
             'changed_by' => $thomas->id
         ));
@@ -58,7 +58,7 @@ class CMSSeeder extends Seeder
         $ps4 = Topic::create(array(
             'name' => 'PS4',
             'description' => 'Exclusive Game Home',
-            'image' => 'some cool image',
+            'image' => 'storage/topicImages/ps4.png',
             'created_by' => $jonas->id,
             'changed_by' => $daniel->id
         ));
