@@ -30,17 +30,22 @@ class SendPostEvent
     public function handle(SavedPost $event): void
     {
         $client = new Client();
-        $webhooks = Webhook::findOrFail('posts');
+        $webhooks = Webhook::query()->where('event', '=', 'posts')->get();
         if($webhooks) {
             foreach($webhooks as $key=>$webhook) {
-                $client->post(
-                    $webhook->url, [
-                        'body' => $event->post
-                    ]
-                );
+                try {
+                    Log::info('logging webhook');
+                    $client->post(
+                        $webhook->url, [
+                            'body' => $event->post
+                        ]
+                    );
+                } catch (\Exception $e) {
+                    LOG::warning('Cant contact', ['data'=>$webhook->url]);
+                }
             }
         }
         $post = $event->post;
-        LOG::critical('sending post data', ['data' => $post->toArray()]);
+        LOG::info('sending post data', ['data' => $post->toArray()]);
     }
 }

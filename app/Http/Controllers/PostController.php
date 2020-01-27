@@ -47,6 +47,7 @@ class PostController extends Controller
             event(new SavedPost($post));
         } catch (\Exception $e) {
             LOG::Warning('No API Server online');
+            LOG::critical('Error', ['message' => $e->getMessage()]);
         }
 
 
@@ -99,6 +100,7 @@ class PostController extends Controller
                 event(new SavedPost($post));
             } catch (\Exception $e) {
                 LOG::Warning('No API Server online');
+                LOG::critical('Error', ['message' => $e->getMessage()]);
             }
 
             return response(array('info'=>1, 'data'=> $post));

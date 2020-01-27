@@ -8,31 +8,16 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
-use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 
 class WebhookController extends Controller
 {
-    /**
-     * @param Request $request
-     * @return ResponseFactory|Response
-     */
-    public function handle(Request $request) {
-        LOG::critical('made it here');
-        return response(array('data'=>'responed'));
-    }
 
-    /**
-     * @param Request $request
-     * @return ResponseFactory|Response
-     */
-    public function webhookAction(Request $request) {
-        LOG::critical('starting to hit webhook');
-        $client = new Client();
-        $res = $client->get('http://localhost:8001/api/webhook');
-        LOG::critical('ending to hit webhook');
-        return response(array('data'=>'responed'));
+    public function handle(Request $request) {
+        LOG::info('recived webhook data');
+        $json_data = $request->getContent();
+        file_put_contents('webhook_response.json', $json_data);
     }
 
     /**
