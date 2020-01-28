@@ -21,7 +21,7 @@ class TopicController extends Controller
 
         if(isset($request['image']) && !empty($request['image'])){
             $image = $request['image'];
-            $this->processBase64String($image);
+            $imagePath = $this->processBase64String($image);
         }
         Topic::create(array(
             'name'=>$request['name'],
@@ -90,11 +90,12 @@ class TopicController extends Controller
         $substring_start = strpos($imageString, ';base64');
         $substring_start += strlen(';base64');
         $data = substr($imageString, $substring_start);
-        Log::info('Image extension is', ['extension' => $data]);
+        Log::info('Image data is', ['extension' => $data]);
         return $data;
     }
 
-    private function processBase64String($image) {
+    private function processBase64String($image): string
+    {
         $imagePath = '';
         if (preg_match('/^data:image\/(\w+);base64,/', $image)) {
             $extension = $this->getImageExtensionFromBase64($image);
