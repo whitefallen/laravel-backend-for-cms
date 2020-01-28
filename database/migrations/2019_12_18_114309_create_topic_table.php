@@ -17,7 +17,7 @@ class CreateTopicTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('changed_by')->nullable();
             $table->timestamps();

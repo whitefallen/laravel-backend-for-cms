@@ -14,14 +14,26 @@ class TopicController extends Controller
     }
 
     public function createTopic(Request $request){
+        if(isset($request['image']) && !empty($request['image'])){
+            /*
+            request()->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+            */
+            $imageName = time().'.'.request()->image->getClientOriginalExtension();
+            request()->image->move(public_path('topicImages'), $imageName);
+            $imagePath = 'storage/topicImages/' . $imageName;
+        }else{
+            $imagePath = 'storage/topicImages/default-image-800x600.jpg';
+        }
         Topic::create(array(
             'name'=>$request['name'],
             'description'=>$request['description'],
-            'image'=>$request['image'],
+            'image'=>$request[$imagePath],
             'created_by'=>$request['created_by'],
             'changed_by'=>$request['changed_by']
         ));
-        return response(array('info'=>1));
+        return response(array('info'=>1, 'debug' => $request['image']));
     }
 
     public function getTopicById(int $id){
