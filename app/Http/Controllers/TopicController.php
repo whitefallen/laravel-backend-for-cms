@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Topic;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Mockery\Exception;
 
 class TopicController extends Controller
@@ -14,17 +16,12 @@ class TopicController extends Controller
     }
 
     public function createTopic(Request $request){
+
+        $imagePath = 'storage/topicImages/default-image-800x600.jpg';
+
         if(isset($request['image']) && !empty($request['image'])){
-            /*
-            request()->validate([
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
-            */
-            $imageName = time().'.'.request()->image->getClientOriginalExtension();
-            request()->image->move(public_path('topicImages'), $imageName);
-            $imagePath = 'storage/topicImages/' . $imageName;
-        }else{
-            $imagePath = 'storage/topicImages/default-image-800x600.jpg';
+            $image = $request['image'];
+            $this->processBase64String($image);
         }
         Topic::create(array(
             'name'=>$request['name'],
@@ -76,6 +73,38 @@ class TopicController extends Controller
             return response(array('info'=>0,'message'=>'No Topic found with provided ID'));
         }catch(Exception $e){
             return response(array('info'=>0,'message'=>$e));
+        }
+    }
+
+    private function getImageExtensionFromBase64(string $imageString) : string {
+        $extension = '';
+        $substring_start = strpos($imageString, 'data:image/');
+        $substring_start += strlen('data:image/');
+        $size = strpos($imageString, ';base64', $substring_start) - $substring_start;
+        $extension = substr($imageString, $substring_start, $size);
+        Log::info('Image extension is', ['extension' => $extension]);
+        return $extension;
+    }
+
+    private function getImageDataStringFromBase64(string $imageString): string {
+        $substring_start = strpos($imageString, ';base64');
+        $substring_start += strlen(';base64');
+        $data = substr($imageString, $substring_start);
+        Log::info('Image extension is', ['extension' => $data]);
+        return $data;
+    }
+
+    private function processBase64String($image) {
+        $imagePath = '';
+        if (preg_match('/^data:image\/(\w+);base64,/', $image)) {
+            $extension = $this->getImageExtensionFromBase64($image);
+            $imgData = $this->getImageDataStringFromBase64($image);
+            $img = base64_decode($imgData);
+            $imguid = uniqid('img_', true);
+            $imgName = $imguid .'.'.$extension;
+            Storage::disk('public')->put('/topicImages/'.$imgName, $img);
+            $imagePath = 'storage/topicImages/'.$imgName;
+            return $imagePath;
         }
     }
 }
