@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SavedTopic;
 use App\Models\Topic;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -23,13 +24,16 @@ class TopicController extends Controller
             $image = $request['image'];
             $imagePath = $this->processBase64String($image);
         }
-        Topic::create(array(
+        $topic = Topic::create(array(
             'name'=>$request['name'],
             'description'=>$request['description'],
             'image'=>$imagePath,
             'created_by'=>$request['created_by'],
             'changed_by'=>$request['changed_by']
         ));
+
+        $this->fireEvent(SavedTopic::class, $topic);
+
         return response(array('info'=>1));
     }
 
@@ -84,36 +88,4 @@ class TopicController extends Controller
         }
     }
 
-    private function getImageExtensionFromBase64(string $imageString) : string {
-        $extension = '';
-        $substring_start = strpos($imageString, 'data:image/');
-        $substring_start += strlen('data:image/');
-        $size = strpos($imageString, ';base64', $substring_start) - $substring_start;
-        $extension = substr($imageString, $substring_start, $size);
-        Log::info('Image extension is', ['extension' => $extension]);
-        return $extension;
-    }
-
-    private function getImageDataStringFromBase64(string $imageString): string {
-        $substring_start = strpos($imageString, ';base64');
-        $substring_start += strlen(';base64');
-        $data = substr($imageString, $substring_start);
-        Log::info('Image data is', ['extension' => $data]);
-        return $data;
-    }
-
-    private function processBase64String($image): string
-    {
-        $imagePath = '';
-        if (preg_match('/^data:image\/(\w+);base64,/', $image)) {
-            $extension = $this->getImageExtensionFromBase64($image);
-            $imgData = $this->getImageDataStringFromBase64($image);
-            $img = base64_decode($imgData);
-            $imguid = uniqid('img_', true);
-            $imgName = $imguid .'.'.$extension;
-            Storage::disk('public')->put('/topicImages/'.$imgName, $img);
-            $imagePath = 'storage/topicImages/'.$imgName;
-            return $imagePath;
-        }
-    }
 }

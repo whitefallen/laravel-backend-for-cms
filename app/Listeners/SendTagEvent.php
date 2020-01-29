@@ -2,9 +2,10 @@
 
 namespace App\Listeners;
 
-use App\Events\SavedPost;
 
-class SendPostEvent extends SendEntityEvent
+use App\Events\SavedTag;
+
+class SendTagEvent extends SendEntityEvent
 {
     /**
      * Create the event listener.
@@ -19,11 +20,11 @@ class SendPostEvent extends SendEntityEvent
     /**
      * Handle the event.
      *
-     * @param  SavedPost  $event
+     * @param SavedTag $event
      * @return void
      */
-    public function handle(SavedPost $event): void
+    public function handle(SavedTag $event): void
     {
-        $this->fireEvent($event, 'post');
+        $this->fireEvent($event, 'tag');
     }
 }

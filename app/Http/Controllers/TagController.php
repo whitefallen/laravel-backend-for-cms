@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SavedTag;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -14,12 +15,15 @@ class TagController extends Controller
     }
 
     public function createTag(Request $request){
-        Tag::create(array(
+        $tag = Tag::create(array(
             'name'=>$request['name'],
             'description'=>$request['description'],
             'created_by'=>$request['created_by'],
             'changed_by'=>$request['changed_by']
         ));
+
+        $this->fireEvent(SavedTag::class, $tag);
+
         return response(array('info'=>1));
     }
 

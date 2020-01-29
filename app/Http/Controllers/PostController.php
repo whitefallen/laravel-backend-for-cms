@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Listeners\SendPostEvent;
 use App\Models\Post;
 use App\Models\Topic;
 use App\Models\Tag;
@@ -42,13 +43,7 @@ class PostController extends Controller
         $post->format()->associate($format);
         $post->save();
 
-        // Fire event to trigger webhooks
-        try {
-            event(new SavedPost($post));
-        } catch (\Exception $e) {
-            LOG::Warning('No API Server online');
-            LOG::critical('Error', ['message' => $e->getMessage()]);
-        }
+        $this->fireEvent(SavedPost::class, $post);
 
 
         return response(array('info'=>1, 'Post' => $post));

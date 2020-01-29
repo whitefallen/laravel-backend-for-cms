@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SavedFormat;
 use App\Models\Format;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -14,12 +15,15 @@ class FormatController extends Controller
     }
 
     public function createFormat(Request $request){
-        Format::create(array (
+        $format = Format::create(array (
             'name'=>$request['name'],
             'description'=>$request['description'],
             'created_by'=>$request['created_by'],
             'changed_by'=>$request['changed_by']
         ));
+
+        $this->fireEvent(SavedFormat::class, $format);
+
         return response(array('info'=>1));
     }
 

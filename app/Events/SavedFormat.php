@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\Post;
+use App\Models\Format;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SavedPost
+class SavedFormat
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,11 +20,11 @@ class SavedPost
     /**
      * Create a new event instance.
      *
-     * @param Post $_post
+     * @param Format $_format
      */
-    public function __construct(Post $_post)
+    public function __construct(Format $_format)
     {
-        $this->data = $_post;
+        $this->data = $_format;
     }
 
     /**

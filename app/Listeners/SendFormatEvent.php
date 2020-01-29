@@ -2,9 +2,10 @@
 
 namespace App\Listeners;
 
-use App\Events\SavedPost;
+use App\Events\SavedFormat;
 
-class SendPostEvent extends SendEntityEvent
+
+class SendFormatEvent extends SendEntityEvent
 {
     /**
      * Create the event listener.
@@ -19,11 +20,11 @@ class SendPostEvent extends SendEntityEvent
     /**
      * Handle the event.
      *
-     * @param  SavedPost  $event
+     * @param SavedFormat $event
      * @return void
      */
-    public function handle(SavedPost $event): void
+    public function handle(SavedFormat $event): void
     {
-        $this->fireEvent($event, 'post');
+        $this->fireEvent($event, 'format');
     }
 }
