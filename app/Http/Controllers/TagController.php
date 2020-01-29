@@ -26,6 +26,8 @@ class TagController extends Controller
     public function getTagById(int $id){
         try{
             $tag = Tag::findOrFail($id);
+            $tag->creator;
+            $tag->editor;
             return response(array('info'=>1,'data' => $tag ));
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Tag found with provided ID'));
