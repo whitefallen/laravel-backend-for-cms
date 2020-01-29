@@ -30,7 +30,7 @@ class TopicController extends Controller
             'created_by'=>$request['created_by'],
             'changed_by'=>$request['changed_by']
         ));
-        return response(array('info'=>1, 'debug' => $request['image']));
+        return response(array('info'=>1));
     }
 
     public function getTopicById(int $id){
@@ -47,12 +47,20 @@ class TopicController extends Controller
     }
 
     public function editTopic(Request $request, int $id){
+
+        if(isset($request['image']) && !empty($request['image']) && $request['imgIsSet'] == true){
+            $image = $request['image'];
+            $imagePath = $this->processBase64String($image);
+        }else{
+            $topic = Topic::findOrFail($id);
+            $imagePath = $topic->image;
+        }
         try{
             Topic::where('id',$id)
                 ->update([
                     'name'=>$request['name'],
                     'description'=>$request['description'],
-                    'image'=>$request['image'],
+                    'image'=>$imagePath,
                     'created_by'=>$request['created_by'],
                     'changed_by'=>$request['changed_by']
                 ]);
