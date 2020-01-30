@@ -49,6 +49,10 @@ class FormatController extends Controller
                     'created_by'=>$request['created_by'],
                     'changed_by'=>$request['changed_by']
                 ]);
+
+            $format = Format::findOrFail($id);
+            $this->fireEvent(SavedFormat::class, $format);
+
             return response(array('info'=>1));
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Format found with provided ID'));

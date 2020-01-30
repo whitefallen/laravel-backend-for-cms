@@ -68,6 +68,10 @@ class TopicController extends Controller
                     'created_by'=>$request['created_by'],
                     'changed_by'=>$request['changed_by']
                 ]);
+
+            $topic = Topic::findOrFail($id);
+            $this->fireEvent(SavedTopic::class, $topic);
+
             return response(array('info'=>1));
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Topic found with provided ID'));

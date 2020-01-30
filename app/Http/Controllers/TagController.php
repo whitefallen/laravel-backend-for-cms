@@ -49,6 +49,10 @@ class TagController extends Controller
                     'created_by'=>$request['created_by'],
                     'changed_by'=>$request['changed_by']
                 ]);
+
+            $tag = Tag::findOrFail($id);
+            $this->fireEvent(SavedTag::class, $tag);
+
             return response(array('info'=>1));
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Tag found with provided ID'));
