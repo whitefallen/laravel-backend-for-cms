@@ -53,6 +53,7 @@ class PostController extends Controller
         try{
             $post = Post::findOrFail($id);
             $post->creator;
+            $post->editor;
             $post->tags;
             $post->topics;
             $post->format;
