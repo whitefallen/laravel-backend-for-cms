@@ -12,6 +12,7 @@
 @story('deploy')
     clone_repository
     run_composer
+    seeding_topic_img
     update_symlinks
 @endstory
 
@@ -36,6 +37,14 @@
     php artisan config:clear
     php artisan config:cache
     php artisan migrate:refresh --seed
+@endtask
+
+@task('seeding_topic_img')
+    cd {{ $new_release_dir }}
+    php artisan storage:link
+    mv public/pc.png storage/app/public/topicImages
+    mv public/ps4.png storage/app/public/topicImages
+    mv public/switch.jpg storage/app/public/topicImages
 @endtask
 
 @task('update_symlinks')
