@@ -20,13 +20,20 @@ class PostController extends Controller
     }
 
     public function createPost(Request $request){
+
+        $imagePath = 'storage/topicImages/default-image-800x600.jpg';
+
+        if(isset($request['image']) && !empty($request['image'])){
+            $image = $request['image'];
+            $imagePath = $this->processBase64String($image);
+        }
         $post = Post::create(array(
             'title'=>$request['title'],
             'published'=>$request['published'],
             'publish_date'=>$request['publish_date'],
             'introduction'=>$request['introduction'],
             'content'=>$request['content'],
-            'image'=>$request['image'],
+            'image'=>$imagePath,
             'created_by'=>$request['created_by'],
             'changed_by'=>$request['changed_by']
         ));
@@ -66,6 +73,14 @@ class PostController extends Controller
     }
 
     public function editPost(Request $request, int $id){
+        if(isset($request['image']) && !empty($request['image']) && $request['imgIsSet'] == true){
+            $image = $request['image'];
+            $imagePath = $this->processBase64String($image);
+        }else{
+            $post = Post::findOrFail($id);
+            $imagePath = $post->image;
+        }
+
         try{
             Post::where('id',$id)
                 ->update([
