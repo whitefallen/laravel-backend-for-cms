@@ -54,9 +54,10 @@ Route::get('topics', 'TopicController@getAllTopic');
 Route::get('topics/{id}','TopicController@getTopicById');
 Route::get('tags', 'TagController@getAllTag');
 Route::get('tags/{id}','TagController@getTagById');
-Route::get('userposts/{id}','PostController@getPostsFromUser');
+Route::get('posts/user/{id}','PostController@getPostsFromUser');
 
 Route::post('webhookHandle', 'WebhookController@handle');
 Route::post('webhook', 'WebhookController@createWebhook');
 Route::get('webhook', 'WebhookController@getAllWebhooks');
 
+Route::get('webhook/options', 'WebhookController@getWebhookOptions');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Webhook;
+use App\Resources\WebhookEventOptions;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class WebhookController extends Controller
 {
 
     public function handle(Request $request) {
-        LOG::info('recived webhook data');
+        LOG::info('received webhook data');
         $json_data = $request->getContent();
         file_put_contents('webhook_response.json', $json_data);
     }
@@ -29,14 +30,14 @@ class WebhookController extends Controller
 
         $validator = Validator::make($request->all() ,[
             'url' => 'required|string',
-            'event' => 'required|string'
         ]);
 
         if($validator->fails()) {
             return response(array('error' => $validator->messages()));
         }
-        Webhook::create($request->all());
-        return response(array('info' => '1'));
+        $webhook = Webhook::create($request->all());
+        LOG::info('created webhook');
+        return response(array('info' => 1, 'data' => $webhook));
     }
 
     /**
@@ -72,6 +73,16 @@ class WebhookController extends Controller
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Webhook found with provided Event'));
         }catch(Exception $e){
+            return response(array('info'=>0,'message'=>$e));
+        }
+    }
+
+    public function getWebhookOptions() {
+        try {
+            $eventOptions = WebhookEventOptions::getOptions();
+            return response(array('info'=>1,'data' => $eventOptions ));
+        }
+        catch (Exception $e) {
             return response(array('info'=>0,'message'=>$e));
         }
     }

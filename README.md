@@ -14,3 +14,8 @@
 9. Seed the SQLite DB via ``php artisan migrate:refresh --seed``
 
 If all steps are completed, you should now be able to run the project via ``php artisan serve`` and navigate to http://127.0.0.1:8000/ if not specified otherwise 
+
+##TODO
+Finish Post Controller/Model <br>
+Finish Webhook Controller/Model with dispatching <br>
+Finish GraphQL getQueries as layer ontop of REST
