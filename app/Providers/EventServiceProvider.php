@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\EventEntity;
 use App\Events\SavedFormat;
 use App\Events\SavedPost;
 use App\Events\SavedTag;
 use App\Events\SavedTopic;
+use App\Listeners\SendEntityEvent;
 use App\Listeners\SendFormatEvent;
 use App\Listeners\SendPostEvent;
 use App\Listeners\SendTagEvent;
@@ -26,17 +28,8 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        SavedPost::class => [
-            SendPostEvent::class
-        ],
-        SavedTopic::class => [
-            SendTopicEvent::class
-        ],
-        SavedFormat::class => [
-            SendFormatEvent::class
-        ],
-        SavedTag::class => [
-            SendTagEvent::class
+        EventEntity::class => [
+            SendEntityEvent::class
         ]
     ];
 

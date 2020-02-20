@@ -2,29 +2,33 @@
 
 namespace App\Events;
 
-use App\Models\Topic;
+use App\Models\Format;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SavedTopic
+class EventEntity
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $data;
+    public $eventType;
 
     /**
      * Create a new event instance.
      *
-     * @param Topic $_topic
+     * @param Model $_model
+     * @param string $_eventType
      */
-    public function __construct(Topic $_topic)
+    public function __construct(Model $_model, string $_eventType)
     {
-        $this->data = $_topic;
+        $this->data = $_model;
+        $this->eventType = $_eventType;
     }
 
     /**

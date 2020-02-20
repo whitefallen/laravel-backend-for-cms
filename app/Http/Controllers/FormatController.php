@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\SavedFormat;
 use App\Models\Format;
+use App\Resources\WebhookEventOptions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Mockery\Exception;
@@ -22,9 +23,9 @@ class FormatController extends Controller
             'changed_by'=>$request['changed_by']
         ));
 
-        $this->fireEvent(SavedFormat::class, $format);
+        $this->fireEvent(WebhookEventOptions::getOptions()['newFormat'], $format);
 
-        return response(array('info'=>1));
+        return response(array('info'=>1, 'data' => $format));
     }
 
     public function getFormatById(int $id){
@@ -51,9 +52,9 @@ class FormatController extends Controller
                 ]);
 
             $format = Format::findOrFail($id);
-            $this->fireEvent(SavedFormat::class, $format);
+            $this->fireEvent(WebhookEventOptions::getOptions()['changedFormat'], $format);
 
-            return response(array('info'=>1));
+            return response(array('info'=>1, 'data' => $format));
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Format found with provided ID'));
         }catch(Exception $e){

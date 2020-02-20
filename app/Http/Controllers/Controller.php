@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\EventEntity;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -15,15 +17,15 @@ class Controller extends BaseController
 
     /**
      * @param string $_event
-     * @param $_dataObject
+     * @param Model $_dataObject
      */
-    protected function fireEvent(string $_event, object $_dataObject) : void {
+    protected function fireEvent(string $_event, Model $_dataObject) : void {
         Log::info('----- Start Controller / fireEvent -----');
         LOG::info('trying to send event');
         // Fire event to trigger webhooks
         $event = null;
         try {
-            event(new $_event($_dataObject));
+            event(new EventEntity($_dataObject, $_event));
         } catch (\Exception $e) {
             LOG::Warning('No API Server online');
             LOG::critical('Error', ['message' => $e->getMessage()]);

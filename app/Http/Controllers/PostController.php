@@ -73,7 +73,7 @@ class PostController extends Controller
     }
 
     public function editPost(Request $request, int $id){
-        if(isset($request['image']) && !empty($request['image']) && $request['imgIsSet'] == true){
+        if(isset($request['image']) && !empty($request['image']) && $request['imgIsSet'] === true){
             $image = $request['image'];
             $imagePath = $this->processBase64String($image);
         }else{
