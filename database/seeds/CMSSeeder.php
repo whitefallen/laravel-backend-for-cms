@@ -103,7 +103,7 @@ class CMSSeeder extends Seeder
         $post1 = Post::create(array(
             'title' => 'post1',
             'published' => true,
-            'publish_date' => time(),
+            'publish_date' => new DateTime(),
             'introduction' => 'dank meme incoming',
             'content' => 'some normie shit, because daniel',
             'image' => 'storage/postImages/default-image-800x600.jpg',
@@ -117,7 +117,7 @@ class CMSSeeder extends Seeder
         $post2 = Post::create(array(
             'title' => 'post2',
             'published' => true,
-            'publish_date' => time(),
+            'publish_date' => new DateTime(),
             'introduction' => 'dank meme incoming',
             'content' => 'some not normie shit, because jonas',
             'image' => 'storage/postImages/default-image-800x600.jpg',

@@ -21,16 +21,22 @@ class PostController extends Controller
 
     public function createPost(Request $request){
 
-        $imagePath = 'storage/topicImages/default-image-800x600.jpg';
+        $imagePath = 'storage/postImages/placeholder-800x600.jpg';
 
         if(isset($request['image']) && !empty($request['image'])){
             $image = $request['image'];
             $imagePath = $this->processBase64String($image);
         }
+        if(isset($request['publish_date'])) {
+            $publish_date = new \DateTime();
+            $publish_date->setTimestamp($request['publish_date']);
+        } else {
+            $publish_date = null;
+        }
         $post = Post::create(array(
             'title'=>$request['title'],
             'published'=>$request['published'],
-            'publish_date'=>$request['publish_date'],
+            'publish_date'=>$publish_date,
             'introduction'=>$request['introduction'],
             'content'=>$request['content'],
             'image'=>$imagePath,
@@ -78,19 +84,24 @@ class PostController extends Controller
             $imagePath = $this->processBase64String($image);
         }else{
             $post = Post::findOrFail($id);
+            LOG::Info('Image not set', ['data' => $request['image'], 'operation' => $request['imgIsSet']]);
             $imagePath = $post->image;
         }
-
+        if(isset($request['publish_date'])) {
+            $publish_date = new \DateTime();
+            $publish_date->setTimestamp($request['publish_date']);
+        } else {
+            $publish_date = null;
+        }
         try{
             Post::where('id',$id)
                 ->update([
                     'title' => $request['title'],
-                    'format_id' => $request['format_id'],
                     'published' => $request['published'],
-                    'publish_date' => $request['publish_date'],
+                    'publish_date' => $publish_date,
                     'introduction' => $request['introduction'],
                     'content' => $request['content'],
-                    'image' => $request['image'],
+                    'image' => $imagePath,
                     'created_by' => $request['created_by'],
                     'changed_by' => $request['changed_by']
                 ]);

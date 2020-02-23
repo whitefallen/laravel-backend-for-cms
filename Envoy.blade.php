@@ -41,10 +41,12 @@
 
 @task('seeding_topic_img')
     cd {{ $new_release_dir }}
+    mv public/seeding/pc.png storage/app/public/topicImages
+    mv public/seeding/ps4.png storage/app/public/topicImages
+    mv public/seeding/switch.jpg storage/app/public/topicImages
+    mv public/seeding/_t_placeholder-800x600.jpg storage/app/public/topicImages/placeholder-800x600.jpg
+    mv public/seeding/_p_placeholder-800x600.jpg storage/app/public/postImages/placeholder-800x600.jpg
     php artisan storage:link
-    mv public/pc.png storage/app/public/topicImages
-    mv public/ps4.png storage/app/public/topicImages
-    mv public/switch.jpg storage/app/public/topicImages
 @endtask
 
 @task('update_symlinks')

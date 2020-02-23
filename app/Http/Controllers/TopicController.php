@@ -18,7 +18,7 @@ class TopicController extends Controller
 
     public function createTopic(Request $request){
 
-        $imagePath = 'storage/topicImages/default-image-800x600.jpg';
+        $imagePath = 'storage/topicImages/placeholder-800x600.jpg';
 
         if(isset($request['image']) && !empty($request['image'])){
             $image = $request['image'];
@@ -52,7 +52,7 @@ class TopicController extends Controller
 
     public function editTopic(Request $request, int $id){
 
-        if(isset($request['image']) && !empty($request['image']) && $request['imgIsSet'] == true){
+        if(isset($request['image']) && !empty($request['image']) && $request['imgIsSet'] === true){
             $image = $request['image'];
             $imagePath = $this->processBase64String($image);
         }else{

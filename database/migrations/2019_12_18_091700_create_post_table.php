@@ -20,7 +20,7 @@ class CreatePostTable extends Migration
             $table->json('tags')->nullable();
             $table->integer('format_id')->nullable();
             $table->boolean('published');
-            $table->date('publish_date')->nullable();
+            $table->datetime('publish_date')->nullable();
             $table->text('introduction');
             $table->text('content');
             $table->string('image');
