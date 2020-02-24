@@ -50,7 +50,7 @@
 @endtask
 
 @task('update_symlinks')
-    cd {{ $new_release_dir }}
+    cd {{ $app_dir }}
     echo "Linking storage directory"
     rm -rf {{ $new_release_dir }}/storage
     ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
