@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use App\Resources\WebhookEventOptions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Mockery\Exception;
@@ -21,7 +22,7 @@ class TagController extends Controller
             'changed_by'=>$request['changed_by']
         ));
 
-        $this->fireEvent(SavedTag::class, $tag);
+        $this->fireEvent(WebhookEventOptions::getOptions()['newTag'], $tag);
 
         return response(array('info'=>1));
     }
@@ -50,7 +51,8 @@ class TagController extends Controller
                 ]);
 
             $tag = Tag::findOrFail($id);
-            $this->fireEvent(SavedTag::class, $tag);
+
+            $this->fireEvent(WebhookEventOptions::getOptions()['changedTag'], $tag);
 
             return response(array('info'=>1));
         }catch(ModelNotFoundException $e){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Resources\WebhookEventOptions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -52,8 +53,7 @@ class PostController extends Controller
         $post->format()->associate($format);
         $post->save();
 
-        $this->fireEvent(SavedPost::class, $post);
-
+        $this->fireEvent(WebhookEventOptions::getOptions()['newPost'], $post);
 
         return response(array('info'=>1, 'Post' => $post));
     }
@@ -114,12 +114,7 @@ class PostController extends Controller
             $post->save();
 
             // Fire event to trigger webhooks
-            try {
-                event(new SavedPost($post));
-            } catch (\Exception $e) {
-                LOG::Warning('No API Server online');
-                LOG::critical('Error', ['message' => $e->getMessage()]);
-            }
+            $this->fireEvent(WebhookEventOptions::getOptions()['changedPost'], $post);
 
             return response(array('info'=>1, 'data'=> $post));
         }catch(ModelNotFoundException $e){

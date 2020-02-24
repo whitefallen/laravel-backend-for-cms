@@ -51,6 +51,7 @@ class FormatController extends Controller
                 ]);
 
             $format = Format::findOrFail($id);
+            
             $this->fireEvent(WebhookEventOptions::getOptions()['changedFormat'], $format);
 
             return response(array('info'=>1, 'data' => $format));

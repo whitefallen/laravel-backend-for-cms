@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Topic;
+use App\Resources\WebhookEventOptions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Mockery\Exception;
@@ -29,7 +30,7 @@ class TopicController extends Controller
             'changed_by'=>$request['changed_by']
         ));
 
-        $this->fireEvent(SavedTopic::class, $topic);
+        $this->fireEvent(WebhookEventOptions::getOptions()['newTopic'], $topic);
 
         return response(array('info'=>1));
     }
@@ -67,7 +68,8 @@ class TopicController extends Controller
                 ]);
 
             $topic = Topic::findOrFail($id);
-            $this->fireEvent(SavedTopic::class, $topic);
+
+            $this->fireEvent(WebhookEventOptions::getOptions()['changedTopic'], $topic);
 
             return response(array('info'=>1));
         }catch(ModelNotFoundException $e){
