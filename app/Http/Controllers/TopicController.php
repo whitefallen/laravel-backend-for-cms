@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\SavedTopic;
 use App\Models\Topic;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Mockery\Exception;
 
 class TopicController extends Controller
@@ -22,7 +19,7 @@ class TopicController extends Controller
 
         if(isset($request['image']) && !empty($request['image'])){
             $image = $request['image'];
-            $imagePath = $this->processBase64String($image);
+            $imagePath = $this->processBase64String($image, 'topic');
         }
         $topic = Topic::create(array(
             'name'=>$request['name'],
@@ -54,7 +51,7 @@ class TopicController extends Controller
 
         if(isset($request['image']) && !empty($request['image']) && $request['imgIsSet'] === true){
             $image = $request['image'];
-            $imagePath = $this->processBase64String($image);
+            $imagePath = $this->processBase64String($image, 'topic');
         }else{
             $topic = Topic::findOrFail($id);
             $imagePath = $topic->image;

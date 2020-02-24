@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\SavedFormat;
 use App\Models\Format;
 use App\Resources\WebhookEventOptions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Listeners\SendPostEvent;
 use App\Models\Post;
-use App\Models\Topic;
-use App\Models\Tag;
 use App\Models\User;
-use App\Events\SavedPost;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -25,7 +21,7 @@ class PostController extends Controller
 
         if(isset($request['image']) && !empty($request['image'])){
             $image = $request['image'];
-            $imagePath = $this->processBase64String($image);
+            $imagePath = $this->processBase64String($image, 'post');
         }
         if(isset($request['publish_date'])) {
             $publish_date = new \DateTime();
@@ -81,7 +77,7 @@ class PostController extends Controller
     public function editPost(Request $request, int $id){
         if(isset($request['image']) && !empty($request['image']) && $request['imgIsSet'] === true){
             $image = $request['image'];
-            $imagePath = $this->processBase64String($image);
+            $imagePath = $this->processBase64String($image, 'post');
         }else{
             $post = Post::findOrFail($id);
             LOG::Info('Image not set', ['data' => $request['image'], 'operation' => $request['imgIsSet']]);

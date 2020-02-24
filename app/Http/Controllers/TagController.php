@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\SavedTag;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;

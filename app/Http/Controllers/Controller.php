@@ -51,7 +51,7 @@ class Controller extends BaseController
         return $data;
     }
 
-    protected function processBase64String($image): string
+    protected function processBase64String($image, string $type): string
     {
         $imagePath = '';
         if (preg_match('/^data:image\/(\w+);base64,/', $image)) {
@@ -60,9 +60,13 @@ class Controller extends BaseController
             $img = base64_decode($imgData);
             $imguid = uniqid('img_', true);
             $imgName = $imguid .'.'.$extension;
-            Storage::disk('public')->put('/topicImages/'.$imgName, $img);
-            $imagePath = 'storage/topicImages/'.$imgName;
-
+            if($type === 'topic') {
+                Storage::disk('public')->put('/topicImages/'.$imgName, $img);
+                $imagePath = 'storage/topicImages/'.$imgName;
+            } elseif ($type === 'post') {
+                Storage::disk('public')->put('/postImages/'.$imgName, $img);
+                $imagePath = 'storage/postImages/'.$imgName;
+            }
         }
         return $imagePath;
     }
