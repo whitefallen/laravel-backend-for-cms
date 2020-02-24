@@ -47,7 +47,6 @@ class Controller extends BaseController
         $substring_start = strpos($imageString, ';base64');
         $substring_start += strlen(';base64');
         $data = substr($imageString, $substring_start);
-        Log::info('Image data is', ['extension' => $data]);
         return $data;
     }
 

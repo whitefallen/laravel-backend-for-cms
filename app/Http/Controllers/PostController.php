@@ -45,7 +45,7 @@ class PostController extends Controller
          * Set dependencies
          */
         $tags = $request['tags'];
-        $topics = $request['topic'];
+        $topics = $request['topics'];
         $format = $request['format_id'];
 
         $post->tags()->sync($tags);
@@ -103,7 +103,7 @@ class PostController extends Controller
                 ]);
 
             $tags = $request['tags'];
-            $topics = $request['topic'];
+            $topics = $request['topics'];
             $format = $request['format_id'];
 
             $post = Post::findOrFail($id);

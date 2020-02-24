@@ -106,7 +106,7 @@ class CMSSeeder extends Seeder
             'publish_date' => new DateTime(),
             'introduction' => 'dank meme incoming',
             'content' => 'some normie shit, because daniel',
-            'image' => 'storage/postImages/default-image-800x600.jpg',
+            'image' => 'storage/postImages/placeholder-800x600.jpg',
             'created_by' => $daniel->id,
             'changed_by' => $daniel->id
         ));
@@ -120,7 +120,7 @@ class CMSSeeder extends Seeder
             'publish_date' => new DateTime(),
             'introduction' => 'dank meme incoming',
             'content' => 'some not normie shit, because jonas',
-            'image' => 'storage/postImages/default-image-800x600.jpg',
+            'image' => 'storage/postImages/placeholder-800x600.jpg',
             'created_by' => $jonas->id,
             'changed_by' => $jonas->id
         ));
