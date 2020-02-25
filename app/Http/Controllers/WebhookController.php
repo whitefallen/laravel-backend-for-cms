@@ -43,7 +43,7 @@ class WebhookController extends Controller
     /**
      * @return ResponseFactory|Response
      */
-    public function getAllWebhook() {
+    public function getAllWebhooks() {
         return response(array('info' => 1, 'data' => Webhook::all()));
     }
 
@@ -52,6 +52,7 @@ class WebhookController extends Controller
      * @return ResponseFactory|Response
      */
     public function getWebhookById(int $id) {
+        LOG::info('message webhook parameter', ['data' => $id]);
         try{
             $webhook = Webhook::findOrFail($id);
             return response(array('info'=>1,'data' => $webhook ));
@@ -83,6 +84,36 @@ class WebhookController extends Controller
             return response(array('info'=>1,'data' => $eventOptions ));
         }
         catch (Exception $e) {
+            return response(array('info'=>0,'message'=>$e));
+        }
+    }
+
+    public function deleteWebhook(int $id) {
+        try{
+            $webhook = Webhook::findOrFail($id);
+            $webhook->delete();
+            return response(array('info'=>1));
+        }catch(ModelNotFoundException $e){
+            return response(array('info'=>0,'message'=>'No Webhook found with provided ID'));
+        }catch(Exception $e){
+            return response(array('info'=>0,'message'=>$e));
+        }
+    }
+
+    public function editWebhook(Request $request, int $id){
+        try{
+            Webhook::where('id',$id)
+                ->update([
+                    'url'=>$request['url'],
+                    'event'=>$request['event']
+                ]);
+
+            $webhook = Webhook::findOrFail($id);
+
+            return response(array('info'=>1, 'data' => $webhook));
+        }catch(ModelNotFoundException $e){
+            return response(array('info'=>0,'message'=>'No Webhook found with provided ID'));
+        }catch(Exception $e){
             return response(array('info'=>0,'message'=>$e));
         }
     }

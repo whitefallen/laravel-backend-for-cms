@@ -71,7 +71,7 @@ class TopicController extends Controller
 
             $this->fireEvent(WebhookEventOptions::getOptions()['changedTopic'], $topic);
 
-            return response(array('info'=>1));
+            return response(array('info'=>1, 'data' => $topic));
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Topic found with provided ID'));
         }catch(Exception $e){

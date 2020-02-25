@@ -39,25 +39,35 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('tags', 'TagController@createTag');
     Route::delete('tags/{id}','TagController@deleteTag');
     Route::post('tags/{id}','TagController@editTag');
+
+    Route::delete('webhooks/{id}', 'WebhookController@deleteWebhook');
+    Route::post('webhooks/{id}', 'WebhookController@editWebhook');
+    Route::post('webhooks', 'WebhookController@createWebhook');
 });
 
 Route::post('login','UserController@login');
+
 Route::post('users', 'UserController@createUser');
 Route::get('users', 'UserController@getAllUser');
 Route::get('users/{id}', 'UserController@getUserbyId');
 
 Route::get('posts', 'PostController@getAllPost');
 Route::get('posts/{id}','PostController@getPostById');
+
 Route::get('formats', 'FormatController@getAllFormat');
 Route::get('formats/{id}','FormatController@getFormatById');
+
 Route::get('topics', 'TopicController@getAllTopic');
 Route::get('topics/{id}','TopicController@getTopicById');
+
 Route::get('tags', 'TagController@getAllTag');
 Route::get('tags/{id}','TagController@getTagById');
+
 Route::get('posts/user/{id}','PostController@getPostsFromUser');
 
-Route::post('webhookHandle', 'WebhookController@handle');
-Route::post('webhook', 'WebhookController@createWebhook');
-Route::get('webhook', 'WebhookController@getAllWebhooks');
+Route::get('webhooks', 'WebhookController@getAllWebhooks');
+Route::get('webhooks/{id}', 'WebhookController@getWebhookById');
 
-Route::get('webhook/options', 'WebhookController@getWebhookOptions');
+Route::get('webhooks/event/options', 'WebhookController@getWebhookOptions');
+
+Route::post('webhookHandle', 'WebhookController@handle');

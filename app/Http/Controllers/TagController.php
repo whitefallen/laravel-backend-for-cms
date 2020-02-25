@@ -54,7 +54,7 @@ class TagController extends Controller
 
             $this->fireEvent(WebhookEventOptions::getOptions()['changedTag'], $tag);
 
-            return response(array('info'=>1));
+            return response(array('info'=>1, 'data' => $tag));
         }catch(ModelNotFoundException $e){
             return response(array('info'=>0,'message'=>'No Tag found with provided ID'));
         }catch(Exception $e){
