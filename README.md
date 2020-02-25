@@ -7,15 +7,14 @@
 2. run ``npm install`` in the root directory
 3. run ``composer update`` in the root directory
 4. create a ``.env`` file in the root directory and copy the content from ``.env.example``
-5. run ``php artisan key:generate`` to fill the ``API_KEY`` line in ``.env``
-6. run ``php artisan jwt:secret`` to generate a secret
-7. run ``php artisan config:clear`` to clear the config cache
-8. run ``php artisan config:cache`` to make a config cache
-9. Seed the SQLite DB via ``php artisan migrate:refresh --seed``
+5. create a SQLite DB ``database.sqlite`` in the folder ``/database``
+6. run ``php artisan key:generate`` to fill the ``API_KEY`` line in ``.env``
+7. run ``php artisan jwt:secret`` to generate a secret
+8. run ``php artisan config:clear`` to clear the config cache
+9. run ``php artisan config:cache`` to make a config cache
+10. Seed the SQLite DB via ``php artisan migrate:fresh --seed``
 
 If all steps are completed, you should now be able to run the project via ``php artisan serve`` and navigate to http://127.0.0.1:8000/ if not specified otherwise 
 
-##TODO
-Finish Post Controller/Model <br>
-Finish Webhook Controller/Model with dispatching <br>
-Finish GraphQL getQueries as layer ontop of REST
+## Changelog
+Visit ``Changelog.md`` for a more detailed Changelog. 
